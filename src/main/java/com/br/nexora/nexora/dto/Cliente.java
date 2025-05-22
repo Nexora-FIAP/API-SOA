@@ -11,6 +11,7 @@ public class Cliente {
     private PerfilInvestidor perfilInvestidor;
     private LocalDateTime criadoEm;
     private LocalDateTime atualizadoEm;
+    private String senha;
 
     public String getNome() {
         return nome;
@@ -67,4 +68,13 @@ public class Cliente {
     public void setAtualizadoEm(LocalDateTime atualizadoEm) {
         this.atualizadoEm = atualizadoEm;
     }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
 }
