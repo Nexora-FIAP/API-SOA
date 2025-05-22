@@ -1,4 +1,4 @@
-package com.br.nexora.nexora;
+package com.br.nexora.nexora.main;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
