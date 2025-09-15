@@ -1,6 +1,7 @@
 package com.br.fiap.nexora.model;
 
-import jakarta.persistence.Entity;
+import com.br.fiap.nexora.enums.TipoInvestimento;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,4 +9,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class investimento {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+
+    @Enumerated(EnumType.STRING)
+    TipoInvestimento tipo;
+
 }
