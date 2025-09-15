@@ -24,7 +24,7 @@ public class ContaBancaria {
     @Enumerated(EnumType.STRING)
     TipoConta tipoConta;
 
-    @ManyToMany
+    @ManyToOne
     @JoinColumn(name = "cpf")
     Cliente cliente;
 

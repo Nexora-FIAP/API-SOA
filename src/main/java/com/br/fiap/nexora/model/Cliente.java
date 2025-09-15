@@ -1,15 +1,14 @@
 package com.br.fiap.nexora.model;
 
 import com.br.fiap.nexora.enums.PerfilInvestidor;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "Cliente")
 @Getter
@@ -18,15 +17,21 @@ public class Cliente {
     @Id
     int cpf;
 
-    private String nome;
-    private String email;
-    private LocalDate dataNascimento;
+    String nome;
+    String email;
+    LocalDate dataNascimento;
 
     @Enumerated(EnumType.STRING)
     PerfilInvestidor perfilInvestidor;
 
-    private LocalDateTime criadoEm;
-    private LocalDateTime atualizadoEm;
+    LocalDateTime criadoEm;
+    LocalDateTime atualizadoEm;
 
-    private String telefone;
+    // Relacionamento com contas
+    String telefone;@OneToMany(mappedBy = "cliente")
+    List<ContaBancaria> contas = new ArrayList<>();
+
+    // Relacionamento com investimentos
+    @OneToMany(mappedBy = "cliente")
+    List<Investimento> investimentos = new ArrayList<>();
 }

@@ -5,10 +5,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity(name = "Investimento")
 @Getter
 @Setter
-public class investimento {
+public class Investimento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -16,4 +18,13 @@ public class investimento {
     @Enumerated(EnumType.STRING)
     TipoInvestimento tipo;
 
+    float valorAplicado;
+
+    LocalDate dataAplicacao;
+
+    float rendimentoAtual;
+
+    @ManyToOne
+    @JoinColumn(name = "cpf")
+    Cliente cliente;
 }
