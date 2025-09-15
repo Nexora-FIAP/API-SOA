@@ -1,6 +1,7 @@
 package com.br.fiap.nexora.model;
 
 import com.br.fiap.nexora.enums.PerfilInvestidor;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
@@ -8,6 +9,7 @@ import jakarta.persistence.Id;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Entity(name = "Cliente")
 public class Cliente {
     @Id
     private String cpf;
