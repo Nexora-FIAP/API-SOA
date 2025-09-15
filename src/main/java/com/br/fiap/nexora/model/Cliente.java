@@ -27,11 +27,18 @@ public class Cliente {
     LocalDateTime criadoEm;
     LocalDateTime atualizadoEm;
 
-    // Relacionamento com contas
-    String telefone;@OneToMany(mappedBy = "cliente")
+    String telefone;
+
+    @OneToMany(mappedBy = "cliente")
     List<ContaBancaria> contas = new ArrayList<>();
 
-    // Relacionamento com investimentos
     @OneToMany(mappedBy = "cliente")
     List<Investimento> investimentos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "cliente")
+    private List<QuizResultado> quizzes = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cep_endereco")
+    private Endereco endereco;
 }

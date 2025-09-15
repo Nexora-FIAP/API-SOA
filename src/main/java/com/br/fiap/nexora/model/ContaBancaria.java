@@ -25,7 +25,7 @@ public class ContaBancaria {
     TipoConta tipoConta;
 
     @ManyToOne
-    @JoinColumn(name = "cpf")
+    @JoinColumn(name = "cpf_cliente")
     Cliente cliente;
 
     float saldoAtual;
