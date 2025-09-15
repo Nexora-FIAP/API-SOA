@@ -1,5 +1,8 @@
 package com.br.fiap.nexora.controller;
 
+import ch.qos.logback.core.net.server.Client;
+import com.br.fiap.nexora.dto.ClienteDTO;
+import com.br.fiap.nexora.model.Cliente;
 import com.br.fiap.nexora.repository.ClienteRepository;
 import jakarta.persistence.Id;
 import jakarta.transaction.Transactional;
@@ -19,5 +22,7 @@ public class ClienteController {
 
     @PostMapping
     @Transactional
-    public void cadastrarCliente(@RequestBody @Valid)
+    public void cadastrarCliente(@RequestBody @Valid ClienteDTO clienteDTO){
+        ClienteRepository.save(new Cliente(clienteDTO));
+    }
 }

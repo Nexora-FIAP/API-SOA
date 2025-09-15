@@ -5,13 +5,13 @@ import jakarta.validation.constraints.NotNull;
 
 public record EnderecoDTO(
         @NotNull
-        int cep,
+        Integer cep,
 
         @NotBlank
         String rua,
 
         @NotNull
-        int numero,
+        Integer numero,
 
         String complemento,
 

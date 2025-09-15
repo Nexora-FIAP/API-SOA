@@ -1,7 +1,9 @@
 package com.br.fiap.nexora.model;
 
+import com.br.fiap.nexora.dto.ClienteDTO;
 import com.br.fiap.nexora.enums.PerfilInvestidor;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -36,9 +38,17 @@ public class Cliente {
     List<Investimento> investimentos = new ArrayList<>();
 
     @OneToMany(mappedBy = "cliente")
-    private List<QuizResultado> quizzes = new ArrayList<>();
+    List<QuizResultado> quizzes = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cep_endereco")
-    private Endereco endereco;
+    Endereco endereco;
+
+    public Cliente(@Valid ClienteDTO clienteDTO) {
+        this.nome = clienteDTO.nome();
+        this.email = clienteDTO.email();
+        this.dataNascimento = clienteDTO.dataNascimento();
+        this.perfilInvestidor = clienteDTO.perfilInvestidor();
+        this.telefone = clienteDTO.telefone();
+    }
 }

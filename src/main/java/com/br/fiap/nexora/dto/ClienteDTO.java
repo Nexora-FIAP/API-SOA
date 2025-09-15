@@ -18,7 +18,6 @@ public record ClienteDTO(
         String email,
 
         @NotBlank
-        @Pattern(regexp = "\\d{11}")
         String cpf,
 
         @NotNull
