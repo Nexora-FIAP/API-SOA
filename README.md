@@ -1,1 +1,49 @@
-arrumar depois
+# Nexora
+
+A **Nexora** é uma plataforma tecnológica inovadora, desenvolvida em parceria com a **XP Investimentos**, que integra inteligência artificial, educação financeira personalizada e análise de dados para transformar a forma como as pessoas lidam com seus investimentos e decisões financeiras. Seu escopo abrange:
+
+### Inteligência Artificial Aurora
+
+Uma assistente financeira humanizada e inteligente, que acompanha a jornada do usuário de forma contínua. Aurora interpreta perfis de investimento, identifica hábitos de consumo, fornece dicas personalizadas e oferece respostas didáticas e acolhedoras para dúvidas relacionadas ao mercado financeiro.
+
+### Painel Interativo e Visualização de Investimentos
+
+Uma dashboard intuitiva e dinâmica que permite acompanhar gastos, metas, rendimentos e tipos de investimentos com uma experiência visual clara e simplificada, promovendo maior controle e compreensão dos dados financeiros.
+
+### Quiz de Perfil e Educação Financeira
+
+Através de quizzes lúdicos, o usuário descobre seu perfil de investidor e tem acesso a conteúdos educativos sob medida. A plataforma também oferece testes rápidos para consolidar o aprendizado, incentivando o desenvolvimento de habilidades financeiras de forma prática e engajadora.
+
+### Notícias e Insights Automatizados
+
+Aurora entrega resumos inteligentes sobre o mercado financeiro, notícias relevantes e análises simples, filtradas conforme o perfil do usuário e seu nível de conhecimento, promovendo informação sem sobrecarga.
+
+### Objetivos da Nexora
+
+O objetivo principal da Nexora é democratizar o acesso à educação financeira por meio de uma plataforma tecnológica que una inovação, acolhimento e inteligência de dados. A solução busca:
+
+- **Empoderar financeiramente**: Auxiliar o usuário a entender, planejar e executar suas decisões financeiras com autonomia e segurança.
+- **Personalizar o aprendizado e os investimentos**: A inteligência artificial adapta o conteúdo e as recomendações conforme a jornada individual, tornando a experiência mais eficiente e próxima.
+- **Facilitar o acompanhamento financeiro**: Através da dashboard e análises da Aurora, o usuário monitora seu progresso, identifica padrões e é guiado a melhores escolhas.
+- **Simplificar o acesso à informação confiável**: Os resumos automatizados e contextualizados evitam sobrecarga informacional e ajudam o usuário a se manter bem informado com facilidade.
+- **Promover uma cultura de bem-estar financeiro**: A Nexora acredita que o equilíbrio financeiro também faz parte da saúde mental e emocional, oferecendo uma experiência educativa, motivadora e acessível.
+
+Sendo uma solução que **informa, analisa, acompanha e empodera**, a Nexora propõe uma nova era no relacionamento das pessoas com suas finanças, por meio de uma abordagem mais humana, visual e personalizada.
+
+## Passo a passo de configuração e execução
+
+1. Ver depois o que é pra fazer certinho
+
+## Exemplos de requisição e respostas
+
+Fazer depois quando tiver pronto usando insomnia ou postman
+
+## Tecnologias utilizadas
+
+- Linguagem utilizada: Java com Maven
+- Banco de dados: MySQL (produção) e H2 (testes)
+- Lombok
+- Spring Boot DevTools
+- Spring Web
+- Spring Data JPA
+- Validation
