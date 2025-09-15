@@ -16,14 +16,14 @@ import java.time.LocalDateTime;
 @Setter
 public class Cliente {
     @Id
-    private String cpf;
+    int cpf;
 
     private String nome;
     private String email;
     private LocalDate dataNascimento;
 
     @Enumerated(EnumType.STRING)
-    private PerfilInvestidor perfilInvestidor;
+    PerfilInvestidor perfilInvestidor;
 
     private LocalDateTime criadoEm;
     private LocalDateTime atualizadoEm;
