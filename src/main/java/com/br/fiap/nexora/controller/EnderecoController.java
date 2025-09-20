@@ -28,6 +28,16 @@ public class EnderecoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(endereco);
     }
 
+    // GET - buscar todos os endereços
+    @GetMapping
+    public ResponseEntity<List<Endereco>> buscarTodosEnderecos() {
+        List<Endereco> enderecos = enderecoRepository.findAll();
+        if (enderecos.isEmpty()) {
+            return ResponseEntity.noContent().build(); // retorna 204 se não tiver nenhum
+        }
+        return ResponseEntity.ok(enderecos);
+    }
+
     // GET por id
     @GetMapping("/{id}")
     public ResponseEntity<Endereco> buscarEndereco(@PathVariable Long id) {
