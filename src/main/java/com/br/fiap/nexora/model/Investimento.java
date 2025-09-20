@@ -2,6 +2,7 @@ package com.br.fiap.nexora.model;
 
 import com.br.fiap.nexora.dto.InvestimentoDTO;
 import com.br.fiap.nexora.enums.TipoInvestimento;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,6 +29,7 @@ public class Investimento {
 
     @ManyToOne
     @JoinColumn(name = "cpf")
+    @JsonBackReference
     Cliente cliente;
 
     // Construtor que recebe DTO

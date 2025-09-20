@@ -3,6 +3,7 @@ package com.br.fiap.nexora.model;
 import com.br.fiap.nexora.dto.ClienteDTO;
 import com.br.fiap.nexora.enums.PerfilInvestidor;
 import com.br.fiap.nexora.repository.EnderecoRepository;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -39,12 +40,15 @@ public class Cliente {
     String telefone;
 
     @OneToMany(mappedBy = "cliente")
+    @JsonManagedReference
     List<ContaBancaria> contas = new ArrayList<>();
 
     @OneToMany(mappedBy = "cliente")
+    @JsonManagedReference
     List<Investimento> investimentos = new ArrayList<>();
 
     @OneToMany(mappedBy = "cliente")
+    @JsonManagedReference
     List<QuizResultado> quizzes = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)

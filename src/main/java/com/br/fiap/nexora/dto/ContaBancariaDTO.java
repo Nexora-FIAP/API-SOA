@@ -1,7 +1,6 @@
 package com.br.fiap.nexora.dto;
 
 import com.br.fiap.nexora.enums.TipoConta;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -13,7 +12,6 @@ public record ContaBancariaDTO(
         String banco,
 
         @Positive
-        @Column(unique = true, nullable = false)
         int numeroConta,
 
         @NotBlank

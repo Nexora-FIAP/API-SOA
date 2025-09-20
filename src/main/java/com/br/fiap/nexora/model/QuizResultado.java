@@ -2,6 +2,7 @@ package com.br.fiap.nexora.model;
 
 import com.br.fiap.nexora.dto.QuizResultadoDTO;
 import com.br.fiap.nexora.enums.TipoQuiz;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,6 +27,7 @@ public class QuizResultado {
 
     @ManyToOne
     @JoinColumn(name = "cpf_cliente")
+    @JsonBackReference
     Cliente cliente;
 
     // Construtor que recebe DTO

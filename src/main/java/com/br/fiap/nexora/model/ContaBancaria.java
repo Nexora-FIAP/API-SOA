@@ -2,6 +2,7 @@ package com.br.fiap.nexora.model;
 
 import com.br.fiap.nexora.dto.ContaBancariaDTO;
 import com.br.fiap.nexora.enums.TipoConta;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class ContaBancaria {
 
     String banco;
 
+    @Column(unique = true, nullable = false)
     int numeroConta;
 
     String agencia;
@@ -30,6 +32,7 @@ public class ContaBancaria {
 
     @ManyToOne
     @JoinColumn(name = "cpf_cliente")
+    @JsonBackReference
     Cliente cliente;
 
     float saldoAtual;
