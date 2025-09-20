@@ -108,7 +108,7 @@ Isso irá se aplicar para todas as classes. Confirma a documentação :)
 
 ## Tecnologias utilizadas
 
-- Linguagem utilizada: Java com Maven
+- Linguagem utilizada: Java 21 com Maven
 - Banco de dados: MySQL (produção) e H2 (testes)
 - Lombok
 - Spring Boot DevTools
