@@ -32,7 +32,13 @@ Sendo uma solução que **informa, analisa, acompanha e empodera**, a Nexora pro
 
 ## Passo a passo de configuração e execução
 
-1. Ver depois o que é pra fazer certinho
+1. Após clonar o repositório em seu computador, primeiro vá nesse caminho: "..\src\main\resources" e clique em application.properties
+
+2. Na linha "spring.datasource.username=", após o =, coloque o username que usará em seu banco, como exemplo, root, ficando da seguinte forma: spring.datasource.username=root
+
+3. "spring.datasource.password=",após o =, coloque a senha que seu username utilizada para acessar em seu banco, configurada na instalação. Como exemplo, se você está utilizando o usuário root e na configuração sua senha for "123" ficará da seguinte forma: spring.datasource.password=123
+
+4. Abra seu MySQL e acesse o mesmo username que utilizou no application.properties. Em Query, coloque o seguinte código sql: create database nexora_banco;
 
 ## Exemplos de requisição e respostas
 

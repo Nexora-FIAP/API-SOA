@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
 
 public record TransacaoBancariaDTO(
-        Long id, 
+        Long id,
 
         @NotBlank
         String descricao,
