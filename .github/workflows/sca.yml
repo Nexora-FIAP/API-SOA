@@ -1,0 +1,25 @@
+name: SCA - dependency scan
+
+on:
+  schedule:
+    - cron: "0 3 * * *" # nightly
+  workflow_dispatch: {}
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  dependency-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run OWASP Dependency-Check
+        uses: jeremylong/owasp-dependency-check-action@v4
+        with:
+          format: "ALL" # html, xml, sarif
+          failOnCVSS: "9" # falha se CVSS >= 9 (ajuste conforme política)
+          scan: "."
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-check-report
+          path: ./dependency-check-report.html

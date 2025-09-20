@@ -1,0 +1,42 @@
+name: CD - deploy staging & DAST
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch: {}
+
+jobs:
+  deploy-staging:
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -t myapp:${{ github.sha }} .
+
+      - name: Run app (docker)
+        run: |
+          docker run -d --name myapp -p 8080:8080 myapp:${{ github.sha }}
+          # aguardar app subir (ou verificar health endpoint)
+          sleep 15
+
+      - name: Run OWASP ZAP baseline scan (DAST)
+        uses: zaproxy/action-baseline@v0.7.0
+        with:
+          target: "http://localhost:8080"
+          cmd_options: "-r zap-report.html -I" # exemplo
+      - name: Upload ZAP report
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap-report
+          path: zap-report.html
+
+      - name: Fail on high findings
+        id: check_zap
+        run: |
+          # Exemplo simples: parse do relatório HTML/xml para contar alertas com risco alto/critical
+          # Aqui um pseudo-script — adapte para o formato gerado
+          # Se usar zaproxy/action-baseline, ele retorna non-zero quando encontrado alertas de alto risco
+          echo "ZAP finished"
