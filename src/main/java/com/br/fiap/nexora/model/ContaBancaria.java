@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "ContaBancaria")
 @Getter
@@ -31,4 +33,7 @@ public class ContaBancaria {
     float saldoAtual;
 
     private LocalDateTime atualizadoEm;
+
+    @OneToMany(mappedBy = "contaBancaria")
+    private List<TransacaoBancaria> transacoes = new ArrayList<>();
 }

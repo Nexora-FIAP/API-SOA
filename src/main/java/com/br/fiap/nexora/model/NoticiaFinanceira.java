@@ -24,6 +24,4 @@ public class NoticiaFinanceira {
 
     LocalDate dataPublicacao;
 
-    @OneToMany(mappedBy = "contaBancaria")
-    private List<TransacaoBancaria> transacoes = new ArrayList<>();
 }
