@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
 
 public record InvestimentoDTO(
-        Long id, 
+        Long id,
 
         @NotNull
         TipoInvestimento tipo,
