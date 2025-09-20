@@ -30,13 +30,10 @@ jobs:
         run: mvn -B clean verify
 
       - name: Run Semgrep (SAST)
-        uses: returntocorp/semgrep-action@v2
+        uses: returntocorp/semgrep-action@v1 # ✅ versão correta
         with:
-          config: "p/ci"
+          config: "p/ci" # pode customizar com caminho ou repositório
           output: semgrep-results.sarif
-
-      - name: List files after Semgrep run
-        run: ls -la
 
       - name: Upload Semgrep report as artifact
         uses: actions/upload-artifact@v4
