@@ -63,19 +63,48 @@ Requisições para Endereco
 
 2. JSON que você pode utilizar:
 
-   {
-   "id": 1,
-   "cep": "12345678",
-   "rua": "Avenida Paulista",
-   "numero": 1000,
-   "complemento": "Apartamento 101",
-   "bairro": "Bela Vista",
-   "cidade": "São Paulo",
-   "uf": "SP"
-   }
+{
+"id": 1,
+"cep": "12345678",
+"rua": "Avenida Paulista",
+"numero": 1000,
+"complemento": "Apartamento 101",
+"bairro": "Bela Vista",
+"cidade": "São Paulo",
+"uf": "SP"
+}
 
-   3. O retorno será parecido com isso:
-      ![alt text](image-1.png)
+3. O retorno será parecido com isso:
+
+   ![alt text](image-1.png)
+
+#### Metodo Get
+
+1. Para listar todos os endereços, com a url: http://localhost:8080/endereco
+
+![alt text](image-5.png)
+
+2. Para listar com id, com a url: http://localhost:8080/endereco/1
+
+![alt text](image-3.png)
+
+3. Listar por cep, com a url: http://localhost:8080/endereco/cep/12345678
+
+![alt text](image-4.png)
+
+#### Metodo Put
+
+1. Para atualizar, basta informar o id, como exemplo: http://localhost:8080/endereco/1
+
+![alt text](image-6.png)
+
+#### Metodo Delete
+
+1. Para deletar, basta informar o id, como exemplo: http://localhost:8080/endereco/2
+
+![alt text](image-7.png)
+
+Isso irá se aplicar para todas as classes. Confirma a documentação :)
 
 ## Tecnologias utilizadas
 
