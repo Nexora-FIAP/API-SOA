@@ -1,5 +1,6 @@
 package com.br.fiap.nexora.model;
 
+import com.br.fiap.nexora.dto.NoticiaFinanceiraDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,4 +24,19 @@ public class NoticiaFinanceira {
 
     LocalDate dataPublicacao;
 
+    // Construtor que recebe DTO
+    public NoticiaFinanceira(NoticiaFinanceiraDTO dto) {
+        this.titulo = dto.titulo();
+        this.conteudo = dto.conteudo();
+        this.fonte = dto.fonte();
+        this.dataPublicacao = dto.dataPublicacao();
+    }
+
+    // Método para atualizar a partir de DTO
+    public void atualizar(NoticiaFinanceiraDTO dto) {
+        this.titulo = dto.titulo();
+        this.conteudo = dto.conteudo();
+        this.fonte = dto.fonte();
+        this.dataPublicacao = dto.dataPublicacao();
+    }
 }
