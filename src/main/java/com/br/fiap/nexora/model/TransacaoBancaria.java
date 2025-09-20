@@ -1,5 +1,6 @@
 package com.br.fiap.nexora.model;
 
+import com.br.fiap.nexora.dto.TransacaoBancariaDTO;
 import com.br.fiap.nexora.enums.TipoTransacao;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,6 +23,7 @@ public class TransacaoBancaria {
 
     float valor;
 
+    @Enumerated(EnumType.STRING)
     TipoTransacao transacao;
 
     String categoria;
@@ -29,4 +31,24 @@ public class TransacaoBancaria {
     @ManyToOne
     @JoinColumn(name = "conta_bancaria")
     ContaBancaria contaBancaria;
+
+    // Construtor que recebe DTO
+    public TransacaoBancaria(TransacaoBancariaDTO dto, ContaBancaria conta) {
+        this.descricao = dto.descricao();
+        this.dataTransacao = dto.dataTransacao();
+        this.valor = dto.valor();
+        this.transacao = dto.transacao();
+        this.categoria = dto.categoria();
+        this.contaBancaria = conta;
+    }
+
+    // Método para atualizar a partir de DTO
+    public void atualizar(TransacaoBancariaDTO dto, ContaBancaria conta) {
+        this.descricao = dto.descricao();
+        this.dataTransacao = dto.dataTransacao();
+        this.valor = dto.valor();
+        this.transacao = dto.transacao();
+        this.categoria = dto.categoria();
+        this.contaBancaria = conta;
+    }
 }
