@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record EnderecoDTO(
         @NotNull
-        Integer cep,
+        String cep,
 
         @NotBlank
         String rua,

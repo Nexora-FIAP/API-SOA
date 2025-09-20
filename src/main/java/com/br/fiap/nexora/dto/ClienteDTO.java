@@ -1,7 +1,6 @@
 package com.br.fiap.nexora.dto;
 
 import com.br.fiap.nexora.enums.PerfilInvestidor;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -31,6 +30,5 @@ public record ClienteDTO(
         String telefone,
 
         @NotNull
-        @Valid
         EnderecoDTO endereco
 ) { }

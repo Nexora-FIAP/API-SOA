@@ -1,7 +1,9 @@
 package com.br.fiap.nexora.model;
 
+import com.br.fiap.nexora.dto.EnderecoDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity(name = "Endereco")
@@ -11,7 +13,7 @@ import lombok.*;
 @EqualsAndHashCode(of = "cep")
 public class Endereco {
     @Id
-    int cep;
+    String cep;
     String rua;
     int numero;
     String complemento;

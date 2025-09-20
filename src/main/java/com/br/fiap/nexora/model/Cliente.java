@@ -49,7 +49,7 @@ public class Cliente {
     Endereco endereco;
 
     // Construtor que recebe DTO
-    public Cliente(@Valid ClienteDTO clienteDTO) {
+    public Cliente(ClienteDTO clienteDTO) {
         this.cpf = clienteDTO.cpf();
         this.nome = clienteDTO.nome();
         this.email = clienteDTO.email();
