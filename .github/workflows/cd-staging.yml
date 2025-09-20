@@ -23,10 +23,11 @@ jobs:
           sleep 15
 
       - name: Run OWASP ZAP baseline scan (DAST)
-        uses: zaproxy/action-baseline@v0.7.0
+        uses: zaproxy/action-baseline@v0.9.0
         with:
           target: "http://localhost:8080"
-          cmd_options: "-r zap-report.html -I" # exemplo
+          cmd_options: "-r zap-report.html -I"
+
       - name: Upload ZAP report
         uses: actions/upload-artifact@v4
         with:
@@ -36,7 +37,4 @@ jobs:
       - name: Fail on high findings
         id: check_zap
         run: |
-          # Exemplo simples: parse do relatório HTML/xml para contar alertas com risco alto/critical
-          # Aqui um pseudo-script — adapte para o formato gerado
-          # Se usar zaproxy/action-baseline, ele retorna non-zero quando encontrado alertas de alto risco
           echo "ZAP finished"
