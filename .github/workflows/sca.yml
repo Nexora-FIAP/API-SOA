@@ -12,14 +12,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Run OWASP Dependency-Check
         uses: jeremylong/owasp-dependency-check-action@v4
         with:
-          format: "ALL" # html, xml, sarif
-          failOnCVSS: "9" # falha se CVSS >= 9 (ajuste conforme política)
+          format: "ALL"
+          failOnCVSS: "9"
           scan: "."
+
       - name: Upload report
         uses: actions/upload-artifact@v4
         with:
           name: dependency-check-report
           path: ./dependency-check-report.html
+
+      - name: Upload SARIF to GitHub
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ./dependency-check-report.sarif
