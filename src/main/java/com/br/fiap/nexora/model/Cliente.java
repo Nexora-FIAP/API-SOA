@@ -61,6 +61,16 @@ public class Cliente {
         this.endereco = new Endereco(clienteDTO.endereco());
     }
 
+    public void atualizar(ClienteDTO clienteDTO) {
+        this.nome = clienteDTO.nome();
+        this.email = clienteDTO.email();
+        this.dataNascimento = clienteDTO.dataNascimento();
+        this.perfilInvestidor = clienteDTO.perfilInvestidor();
+        this.telefone = clienteDTO.telefone();
+        this.endereco = new Endereco(clienteDTO.endereco()); // sobrescreve o endereço
+    }
+
+
     // Método chamado antes de atualizar a entidade
     @PreUpdate
     public void preUpdate() {

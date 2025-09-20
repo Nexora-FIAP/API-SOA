@@ -17,27 +17,56 @@ import java.util.List;
 public class ClienteController {
 
     @Autowired
-    ClienteRepository clienteRepository;
+    private ClienteRepository clienteRepository;
 
+    // POST - criar cliente
     @PostMapping
     @Transactional
-    public ResponseEntity<Cliente> cadastrarCliente(@RequestBody @Valid ClienteDTO clienteDTO){
+    public ResponseEntity<Cliente> cadastrarCliente(@RequestBody @Valid ClienteDTO clienteDTO) {
         Cliente cliente = new Cliente(clienteDTO);
         clienteRepository.save(cliente);
         return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
     }
 
+    // GET por CPF
+    @GetMapping("/{cpf}")
+    public ResponseEntity<Cliente> buscarCliente(@PathVariable String cpf) {
+        return clienteRepository.findById(cpf)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    // GET - buscar todos os clientes
     @GetMapping
-    public ResponseEntity<List<Cliente>> listarClientes() {
+    public ResponseEntity<List<Cliente>> buscarTodosClientes() {
         List<Cliente> clientes = clienteRepository.findAll();
+        if (clientes.isEmpty()) {
+            return ResponseEntity.noContent().build(); // retorna 204 se não tiver nenhum
+        }
         return ResponseEntity.ok(clientes);
     }
 
-
-    @GetMapping("/{cpf}")
-    public ResponseEntity<Cliente> buscarClientePorCpf(@PathVariable String cpf) {
+    // PUT - atualizar cliente
+    @PutMapping("/{cpf}")
+    @Transactional
+    public ResponseEntity<Cliente> atualizarCliente(@PathVariable String cpf, @RequestBody @Valid ClienteDTO clienteDTO) {
         return clienteRepository.findById(cpf)
-                .map(cliente -> ResponseEntity.ok().body(cliente))
+                .map(cliente -> {
+                    cliente.atualizar(clienteDTO); // cria método atualizar na entidade Cliente
+                    clienteRepository.save(cliente);
+                    return ResponseEntity.ok(cliente);
+                })
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    // DELETE - deletar cliente
+    @DeleteMapping("/{cpf}")
+    @Transactional
+    public ResponseEntity<Void> deletarCliente(@PathVariable String cpf) {
+        if (!clienteRepository.existsById(cpf)) {
+            return ResponseEntity.notFound().build();
+        }
+        clienteRepository.deleteById(cpf);
+        return ResponseEntity.noContent().build();
     }
 }
