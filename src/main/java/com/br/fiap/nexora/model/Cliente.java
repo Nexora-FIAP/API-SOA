@@ -30,7 +30,9 @@ public class Cliente {
     @Enumerated(EnumType.STRING)
     PerfilInvestidor perfilInvestidor;
 
-    LocalDateTime criadoEm;
+    @Column(updatable = false) // só define na criação
+    private LocalDateTime criadoEm = LocalDateTime.now();
+
     LocalDateTime atualizadoEm;
 
     String telefone;
@@ -57,6 +59,12 @@ public class Cliente {
         this.perfilInvestidor = clienteDTO.perfilInvestidor();
         this.telefone = clienteDTO.telefone();
         this.endereco = new Endereco(clienteDTO.endereco());
+    }
+
+    // Método chamado antes de atualizar a entidade
+    @PreUpdate
+    public void preUpdate() {
+        this.atualizadoEm = LocalDateTime.now();
     }
 
 }
