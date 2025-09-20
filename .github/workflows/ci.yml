@@ -30,7 +30,7 @@ jobs:
         run: mvn -B clean verify
 
       - name: Run Semgrep (SAST)
-        uses: returntocorp/semgrep-action@1.28.0
+        uses: returntocorp/semgrep-action@1
         with:
           config: p/ci
           generateSarif: true
