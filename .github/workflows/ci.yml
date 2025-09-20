@@ -31,12 +31,16 @@ jobs:
       - name: Run Semgrep (SAST)
         uses: returntocorp/semgrep-action@v2
         with:
-          config: "p/ci" # regras públicas de CI; pode apontar para seu ruleset
+          config: "p/ci"
           output: semgrep-results.sarif
-        # semgrep-action já anota PRs e falha se achar problemas por padrão
 
-      - name: Upload semgrep report
+      - name: Upload Semgrep report as artifact
         uses: actions/upload-artifact@v4
         with:
           name: semgrep-report
           path: semgrep-results.sarif
+
+      - name: Upload SARIF to GitHub (Code Scanning)
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: semgrep-results.sarif
