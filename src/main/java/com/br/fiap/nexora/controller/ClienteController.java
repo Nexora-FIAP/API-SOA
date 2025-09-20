@@ -1,10 +1,8 @@
 package com.br.fiap.nexora.controller;
 
-import ch.qos.logback.core.net.server.Client;
 import com.br.fiap.nexora.dto.ClienteDTO;
 import com.br.fiap.nexora.model.Cliente;
 import com.br.fiap.nexora.repository.ClienteRepository;
-import jakarta.persistence.Id;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
