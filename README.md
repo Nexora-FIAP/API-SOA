@@ -51,11 +51,31 @@ Sendo uma solução que **informa, analisa, acompanha e empodera**, a Nexora pro
 
 Aqui nesse tópico veremos exemplos de requisição e como utilizar em seu computador. Nos testes, utilizamos o Insomnia, mas fique livre para utilizar o Postman se aachar melhor :)
 
+A URL padrão é a seguinte: http://localhost:8080
+
 ### Endereco
 
-Para cadas
+Requisições para Endereco
 
 #### Metodo Post
+
+1. Para cadastrar um endereço, com a url: http://localhost:8080/endereco
+
+2. JSON que você pode utilizar:
+
+   {
+   "id": 1,
+   "cep": "12345678",
+   "rua": "Avenida Paulista",
+   "numero": 1000,
+   "complemento": "Apartamento 101",
+   "bairro": "Bela Vista",
+   "cidade": "São Paulo",
+   "uf": "SP"
+   }
+
+   3. O retorno será parecido com isso:
+      ![alt text](image-1.png)
 
 ## Tecnologias utilizadas
 
