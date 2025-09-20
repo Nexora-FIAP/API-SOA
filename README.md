@@ -49,7 +49,13 @@ Sendo uma solução que **informa, analisa, acompanha e empodera**, a Nexora pro
 
 ## Exemplos de requisição e respostas
 
-Fazer depois quando tiver pronto usando insomnia ou postman
+Aqui nesse tópico veremos exemplos de requisição e como utilizar em seu computador. Nos testes, utilizamos o Insomnia, mas fique livre para utilizar o Postman se aachar melhor :)
+
+### Endereco
+
+Para cadas
+
+#### Metodo Post
 
 ## Tecnologias utilizadas
 

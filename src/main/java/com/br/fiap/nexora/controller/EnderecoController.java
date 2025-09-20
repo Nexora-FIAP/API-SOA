@@ -31,4 +31,14 @@ public class EnderecoController {
                 .map(endereco -> ResponseEntity.ok().body(endereco))
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<Void> deletarEndereco(@PathVariable String id) {
+        if (!enderecoRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        enderecoRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }
