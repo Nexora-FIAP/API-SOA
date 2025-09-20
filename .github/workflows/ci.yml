@@ -34,17 +34,21 @@ jobs:
         with:
           config: p/ci
           generateSarif: true
+          sarif_output: semgrep.sarif # Gera o arquivo com esse nome na raiz
 
       - name: List files in the directory
-        run: ls -alh # Isso vai listar os arquivos para garantir que semgrep.sarif existe
+        run: ls -alh
+
+      - name: Find SARIF file
+        run: find . -name "*.sarif"
 
       - name: Upload Semgrep report as artifact
         uses: actions/upload-artifact@v4
         with:
           name: semgrep-report
-          path: semgrep.sarif # Certifique-se que esse caminho está correto
+          path: semgrep.sarif
 
       - name: Upload SARIF to GitHub (Code Scanning)
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: semgrep.sarif # Certifique-se de que esse caminho está correto
+          sarif_file: semgrep.sarif
