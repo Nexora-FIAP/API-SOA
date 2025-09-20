@@ -33,5 +33,4 @@ public record ClienteDTO(
         @NotNull
         @Valid
         EnderecoDTO endereco
-){
-}
+) { }

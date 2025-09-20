@@ -2,15 +2,13 @@ package com.br.fiap.nexora.model;
 
 import com.br.fiap.nexora.enums.TipoTransacao;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity(name = "TransacaoBancaria")
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class TransacaoBancaria {

@@ -2,10 +2,7 @@ package com.br.fiap.nexora.model;
 
 import com.br.fiap.nexora.enums.TipoConta;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,6 +10,7 @@ import java.util.List;
 
 @Entity(name = "ContaBancaria")
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class ContaBancaria {
