@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ContaBancariaRepository extends JpaRepository<ContaBancaria, Long> {
     List<ContaBancaria> findByClienteCpf(String cpf); // buscar contas de um cliente
+    boolean existsByNumeroContaAndClienteCpf(int numeroConta, String cpf);
+
 }
