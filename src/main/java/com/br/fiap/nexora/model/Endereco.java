@@ -1,11 +1,7 @@
 package com.br.fiap.nexora.model;
 
 import com.br.fiap.nexora.dto.EnderecoDTO;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity(name = "Endereco")
@@ -14,20 +10,32 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Endereco {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    String cep;
-    String rua;
-    int numero;
-    String complemento;
-    String bairro;
-    String cidade;
-    String uf;
+    private String cep;
+    private String rua;
+    private int numero;
+    private String complemento;
+    private String bairro;
+    private String cidade;
+    private String uf;
 
+    // Construtor a partir do DTO
     public Endereco(EnderecoDTO enderecoDTO) {
-        this.id = enderecoDTO.id();
+        this.cep = enderecoDTO.cep();
+        this.rua = enderecoDTO.rua();
+        this.numero = enderecoDTO.numero();
+        this.complemento = enderecoDTO.complemento();
+        this.bairro = enderecoDTO.bairro();
+        this.cidade = enderecoDTO.cidade();
+        this.uf = enderecoDTO.uf();
+    }
+
+    // Atualiza a entidade com dados do DTO
+    public void atualizar(EnderecoDTO enderecoDTO) {
         this.cep = enderecoDTO.cep();
         this.rua = enderecoDTO.rua();
         this.numero = enderecoDTO.numero();

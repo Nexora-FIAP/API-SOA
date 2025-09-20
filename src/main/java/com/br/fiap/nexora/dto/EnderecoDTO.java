@@ -25,6 +25,4 @@ public record EnderecoDTO(
 
         @NotBlank
         String uf
-) {
-
-}
+) { }
