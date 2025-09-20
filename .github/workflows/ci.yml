@@ -30,18 +30,21 @@ jobs:
         run: mvn -B clean verify
 
       - name: Run Semgrep (SAST)
-        uses: returntocorp/semgrep-action@v1
+        uses: returntocorp/semgrep-action@1.28.0
         with:
           config: p/ci
           generateSarif: true
+
+      - name: List files in the directory
+        run: ls -alh # Isso vai listar os arquivos para garantir que semgrep.sarif existe
 
       - name: Upload Semgrep report as artifact
         uses: actions/upload-artifact@v4
         with:
           name: semgrep-report
-          path: semgrep.sarif
+          path: semgrep.sarif # Certifique-se que esse caminho está correto
 
       - name: Upload SARIF to GitHub (Code Scanning)
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: semgrep.sarif
+          sarif_file: semgrep.sarif # Certifique-se de que esse caminho está correto
