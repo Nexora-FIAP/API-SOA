@@ -104,7 +104,7 @@ Requisições para Endereco
 
 ![alt text](image-7.png)
 
-Isso irá se aplicar para todas as classes. Confirma a documentação :)
+Isso irá se aplicar para todas as classes. Você pode ver alguma das requisições dentro da pasta requisicoes > e importar o arquivo dentro do aplicativo de preferência, postman ou insomnia.
 
 ## Tecnologias utilizadas
 
