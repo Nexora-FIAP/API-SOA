@@ -1,5 +1,6 @@
 package com.br.fiap.nexora.model;
 
+import com.br.fiap.nexora.dto.InvestimentoDTO;
 import com.br.fiap.nexora.enums.TipoInvestimento;
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,4 +29,22 @@ public class Investimento {
     @ManyToOne
     @JoinColumn(name = "cpf")
     Cliente cliente;
+
+    // Construtor que recebe DTO
+    public Investimento(InvestimentoDTO dto, Cliente cliente) {
+        this.tipo = dto.tipo();
+        this.valorAplicado = dto.valorAplicado();
+        this.dataAplicacao = dto.dataAplicacao();
+        this.rendimentoAtual = dto.rendimentoAtual();
+        this.cliente = cliente;
+    }
+
+    // Método para atualizar a partir de DTO
+    public void atualizar(InvestimentoDTO dto, Cliente cliente) {
+        this.tipo = dto.tipo();
+        this.valorAplicado = dto.valorAplicado();
+        this.dataAplicacao = dto.dataAplicacao();
+        this.rendimentoAtual = dto.rendimentoAtual();
+        this.cliente = cliente;
+    }
 }
