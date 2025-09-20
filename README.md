@@ -2,6 +2,13 @@
 
 A **Nexora** é uma plataforma tecnológica inovadora, desenvolvida em parceria com a **XP Investimentos**, que integra inteligência artificial, educação financeira personalizada e análise de dados para transformar a forma como as pessoas lidam com seus investimentos e decisões financeiras. Seu escopo abrange:
 
+### Integrantes
+
+- Gabriel Machado Carrara Pimentel — RM99880
+- Lourenzo Ramos - RM99951
+- Letícia Resina — RM98069
+- Vítor Hugo Rodrigues — RM97758
+
 ### Inteligência Artificial Aurora
 
 Uma assistente financeira humanizada e inteligente, que acompanha a jornada do usuário de forma contínua. Aurora interpreta perfis de investimento, identifica hábitos de consumo, fornece dicas personalizadas e oferece respostas didáticas e acolhedoras para dúvidas relacionadas ao mercado financeiro.
