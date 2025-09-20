@@ -2,6 +2,7 @@ package com.br.fiap.nexora.model;
 
 import com.br.fiap.nexora.dto.ClienteDTO;
 import com.br.fiap.nexora.enums.PerfilInvestidor;
+import com.br.fiap.nexora.repository.EnderecoRepository;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -61,14 +62,25 @@ public class Cliente {
         this.endereco = new Endereco(clienteDTO.endereco());
     }
 
-    public void atualizar(ClienteDTO clienteDTO) {
-        this.nome = clienteDTO.nome();
-        this.email = clienteDTO.email();
-        this.dataNascimento = clienteDTO.dataNascimento();
-        this.perfilInvestidor = clienteDTO.perfilInvestidor();
-        this.telefone = clienteDTO.telefone();
-        this.endereco = new Endereco(clienteDTO.endereco()); // sobrescreve o endereço
+    public void atualizar(ClienteDTO dto, EnderecoRepository enderecoRepository) {
+        this.nome = dto.nome();
+        this.email = dto.email();
+        this.telefone = dto.telefone();
+        this.perfilInvestidor = dto.perfilInvestidor();
+        this.dataNascimento = dto.dataNascimento();
+
+        if (dto.endereco() != null) {
+            if (dto.endereco().id() != null) {
+                // usar endereço existente
+                this.endereco = enderecoRepository.findById(dto.endereco().id())
+                        .orElseThrow(() -> new RuntimeException("Endereco não encontrado"));
+            } else {
+                // criar novo endereço
+                this.endereco = new Endereco(dto.endereco());
+            }
+        }
     }
+
 
 
     // Método chamado antes de atualizar a entidade

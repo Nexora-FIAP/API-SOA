@@ -3,6 +3,7 @@ package com.br.fiap.nexora.controller;
 import com.br.fiap.nexora.dto.ClienteDTO;
 import com.br.fiap.nexora.model.Cliente;
 import com.br.fiap.nexora.repository.ClienteRepository;
+import com.br.fiap.nexora.repository.EnderecoRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class ClienteController {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
     // POST - criar cliente
     @PostMapping
@@ -52,7 +56,7 @@ public class ClienteController {
     public ResponseEntity<Cliente> atualizarCliente(@PathVariable String cpf, @RequestBody @Valid ClienteDTO clienteDTO) {
         return clienteRepository.findById(cpf)
                 .map(cliente -> {
-                    cliente.atualizar(clienteDTO); // cria método atualizar na entidade Cliente
+                    cliente.atualizar(clienteDTO, enderecoRepository); // passa os 2 argumentos agora
                     clienteRepository.save(cliente);
                     return ResponseEntity.ok(cliente);
                 })
