@@ -2,14 +2,17 @@ package com.br.fiap.nexora.model;
 
 import com.br.fiap.nexora.enums.TipoQuiz;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Entity(name = "QuizResultado")
 @Getter
-@Setter
+@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class QuizResultado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

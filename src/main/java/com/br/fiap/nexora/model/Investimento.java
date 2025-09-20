@@ -2,14 +2,17 @@ package com.br.fiap.nexora.model;
 
 import com.br.fiap.nexora.enums.TipoInvestimento;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Entity(name = "Investimento")
 @Getter
-@Setter
+@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class Investimento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

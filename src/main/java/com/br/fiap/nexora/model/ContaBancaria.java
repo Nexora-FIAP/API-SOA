@@ -2,7 +2,9 @@ package com.br.fiap.nexora.model;
 
 import com.br.fiap.nexora.enums.TipoConta;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -11,7 +13,8 @@ import java.util.List;
 
 @Entity(name = "ContaBancaria")
 @Getter
-@Setter
+@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class ContaBancaria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,8 +4,10 @@ import com.br.fiap.nexora.dto.ClienteDTO;
 import com.br.fiap.nexora.enums.PerfilInvestidor;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
+
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,7 +16,8 @@ import java.util.List;
 
 @Entity(name = "Cliente")
 @Getter
-@Setter
+@NoArgsConstructor
+@EqualsAndHashCode(of = "cpf")
 public class Cliente {
     @Id
     int cpf;
