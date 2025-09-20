@@ -1,5 +1,6 @@
 package com.br.fiap.nexora.model;
 
+import com.br.fiap.nexora.dto.ContaBancariaDTO;
 import com.br.fiap.nexora.enums.TipoConta;
 import jakarta.persistence.*;
 import lombok.*;
@@ -37,4 +38,26 @@ public class ContaBancaria {
 
     @OneToMany(mappedBy = "contaBancaria")
     private List<TransacaoBancaria> transacoes = new ArrayList<>();
+
+    // Construtor que recebe DTO
+    public ContaBancaria(ContaBancariaDTO dto, Cliente cliente) {
+        this.banco = dto.banco();
+        this.numeroConta = dto.numeroConta();
+        this.agencia = dto.agencia();
+        this.tipoConta = dto.tipoConta();
+        this.saldoAtual = dto.saldoAtual();
+        this.cliente = cliente;
+        this.atualizadoEm = LocalDateTime.now();
+    }
+
+    // Método para atualizar a conta a partir de DTO
+    public void atualizar(ContaBancariaDTO dto, Cliente cliente) {
+        this.banco = dto.banco();
+        this.numeroConta = dto.numeroConta();
+        this.agencia = dto.agencia();
+        this.tipoConta = dto.tipoConta();
+        this.saldoAtual = dto.saldoAtual();
+        this.cliente = cliente;
+        this.atualizadoEm = LocalDateTime.now();
+    }
 }
