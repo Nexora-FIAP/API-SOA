@@ -34,11 +34,10 @@ jobs:
         run: mvn -B clean verify
 
       - name: Run Semgrep (SAST)
-        uses: returntocorp/semgrep-action@1.28.0
+        uses: returntocorp/semgrep-action@latest # Usando a versão mais recente
         with:
           config: p/ci
           generateSarif: true
-          output: ./semgrep.sarif # Especificando o caminho de saída do arquivo SARIF
 
       - name: List files in the directory
         run: ls -alh # Verificando se o arquivo semgrep.sarif está presente
