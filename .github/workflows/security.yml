@@ -1,0 +1,112 @@
+name: CI/CD Security Pipeline
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  # ================================
+  # 1. SAST - Análise Estática
+  # ================================
+  sast:
+    name: SAST - Semgrep
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Semgrep
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: "p/ci"
+      - name: Upload SAST Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: sast-report
+          path: semgrep.sarif
+      - name: Upload to GitHub Security
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: semgrep.sarif
+
+  # ================================
+  # 2. SCA - Dependências
+  # ================================
+  sca:
+    name: SCA - Snyk
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Snyk
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: test --json > snyk-report.json
+      - name: Upload SCA Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: sca-report
+          path: snyk-report.json
+
+  # ================================
+  # 3. DAST - Teste Dinâmico
+  # ================================
+  dast:
+    name: DAST - OWASP ZAP
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run OWASP ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.8.0
+        with:
+          target: "http://staging.myapp.com" # Troque para sua URL de staging
+          rules_file_name: rules.zap
+          cmd_options: "-a"
+      - name: Upload DAST Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: dast-report
+          path: zap-report.html
+
+  # ================================
+  # 4. Integração & Monitoramento
+  # ================================
+  integration:
+    name: Integration & Monitoring
+    runs-on: ubuntu-latest
+    needs: [sast, sca, dast]
+    steps:
+      - name: Download reports
+        uses: actions/download-artifact@v3
+        with:
+          name: sast-report
+          path: reports/sast
+      - uses: actions/download-artifact@v3
+        with:
+          name: sca-report
+          path: reports/sca
+      - uses: actions/download-artifact@v3
+        with:
+          name: dast-report
+          path: reports/dast
+
+      - name: Check for critical vulnerabilities
+        run: |
+          echo "🔎 Verificando vulnerabilidades críticas..."
+          # Aqui você pode adicionar scripts que leem os relatórios e falham o job caso encontre CVEs críticos
+          # Exemplo simples (pode personalizar):
+          if grep -i "CRITICAL" reports/*/*; then
+            echo "❌ Vulnerabilidades críticas encontradas. Bloqueando deploy."
+            exit 1
+          fi
+
+      - name: Send Notification (Slack)
+        if: failure()
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          payload: |
+            {
+              "text": "🚨 Vulnerabilidades críticas encontradas no pipeline CI/CD. Deploy bloqueado."
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
