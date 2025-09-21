@@ -87,16 +87,16 @@ jobs:
             sleep 5
           done
 
-      - name: Install OWASP ZAP
+      - name: Install ZAP 2.16.1
         run: |
-          wget https://github.com/zaproxy/zaproxy/releases/download/v2.12.0/ZAP_2_12_0_Linux.tar.gz
-          tar -xzf ZAP_2_12_0_Linux.tar.gz
-          chmod +x ZAP_2_12_0/zap.sh
+          wget https://github.com/zaproxy/zaproxy/releases/download/v2.16.1/ZAP_2.16.1_Linux.tar.gz
+          tar -xzf ZAP_2.16.1_Linux.tar.gz
+          chmod +x ZAP_2.16.1/zap.sh
           mkdir -p zap-reports
 
       - name: Run ZAP Baseline Scan
         run: |
-          ./ZAP_2_12_0/zap.sh -cmd -quickurl http://localhost:8080 -quickout zap-reports/zap-report.html
+          ./ZAP_2.16.1/zap.sh -cmd -quickurl http://localhost:8080 -quickout zap-reports/zap-report.html
 
       - name: Upload DAST Report
         uses: actions/upload-artifact@v4
