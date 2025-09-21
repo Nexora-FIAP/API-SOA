@@ -33,8 +33,7 @@ jobs:
         uses: returntocorp/semgrep-action@v1
         with:
           config: p/ci
-          generateSarif: true
-          sarif_output: semgrep.sarif # Gera o arquivo com esse nome na raiz
+          sarif_output: semgrep.sarif
 
       - name: List files in the directory
         run: ls -alh
