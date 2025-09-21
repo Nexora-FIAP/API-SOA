@@ -9,6 +9,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write # Permissão necessária para o upload de SARIF
+      contents: read # Permissão para acessar o repositório
+
     steps:
       - uses: actions/checkout@v4
 
@@ -30,24 +34,22 @@ jobs:
         run: mvn -B clean verify
 
       - name: Run Semgrep (SAST)
-        uses: returntocorp/semgrep-action@v1
+        uses: returntocorp/semgrep-action@1.28.0
         with:
           config: p/ci
-          sarif_output: semgrep.sarif
+          generateSarif: true
+          output: ./semgrep.sarif # Especificando o caminho de saída do arquivo SARIF
 
       - name: List files in the directory
-        run: ls -alh
-
-      - name: Find SARIF file
-        run: find . -name "*.sarif"
+        run: ls -alh # Verificando se o arquivo semgrep.sarif está presente
 
       - name: Upload Semgrep report as artifact
         uses: actions/upload-artifact@v4
         with:
           name: semgrep-report
-          path: semgrep.sarif
+          path: ./semgrep.sarif # Certifique-se de que o caminho esteja correto
 
       - name: Upload SARIF to GitHub (Code Scanning)
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: semgrep.sarif
+          sarif_file: ./semgrep.sarif # Caminho correto para o arquivo SARIF
