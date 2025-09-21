@@ -47,7 +47,7 @@ jobs:
           distribution: "temurin"
           java-version: "21"
       - name: Install Snyk CLI
-        uses: snyk/actions/setup@v3
+        uses: snyk/actions/setup@master
         with:
           version: "latest"
       - name: Run Snyk test
