@@ -24,7 +24,7 @@ jobs:
           config: "p/ci"
           generateSarif: true
       - name: Upload SAST Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4 # Atualizando para a versão v4
         with:
           name: sast-report
           path: semgrep.sarif # Certificando-se de que o arquivo SARIF foi gerado
@@ -48,7 +48,7 @@ jobs:
         with:
           args: test --json > snyk-report.json
       - name: Upload SCA Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4 # Atualizando para a versão v4
         with:
           name: sca-report
           path: snyk-report.json
@@ -67,7 +67,7 @@ jobs:
           rules_file_name: rules.zap
           cmd_options: "-a"
       - name: Upload DAST Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4 # Atualizando para a versão v4
         with:
           name: dast-report
           path: zap-report.html
