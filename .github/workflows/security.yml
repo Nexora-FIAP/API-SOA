@@ -13,24 +13,28 @@ jobs:
   sast:
     name: SAST - Semgrep
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write # Permissão para upload SARIF no GitHub Code Scanning
+      contents: read # Permissão para acessar o código
     steps:
       - uses: actions/checkout@v3
-      - name: Run Semgrep
-        uses: returntocorp/semgrep-action@v1
+      - name: Run Semgrep (SAST)
+        uses: semgrep/semgrep-action@v1 # Usando a ação oficial do Semgrep
         with:
           config: "p/ci"
+          generateSarif: true
       - name: Upload SAST Report
         uses: actions/upload-artifact@v3
         with:
           name: sast-report
-          path: semgrep.sarif
+          path: semgrep.sarif # Certificando-se de que o arquivo SARIF foi gerado
       - name: Upload to GitHub Security
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3 # Certifique-se de usar a versão mais recente
         with:
           sarif_file: semgrep.sarif
 
   # ================================
-  # 2. SCA - Dependências
+  # 2. SCA - Análise de Dependências
   # ================================
   sca:
     name: SCA - Snyk
@@ -93,15 +97,14 @@ jobs:
       - name: Check for critical vulnerabilities
         run: |
           echo "🔎 Verificando vulnerabilidades críticas..."
-          # Aqui você pode adicionar scripts que leem os relatórios e falham o job caso encontre CVEs críticos
-          # Exemplo simples (pode personalizar):
+          # Exemplo simples para procurar por "CRITICAL" nos relatórios
           if grep -i "CRITICAL" reports/*/*; then
             echo "❌ Vulnerabilidades críticas encontradas. Bloqueando deploy."
             exit 1
           fi
 
       - name: Send Notification (Slack)
-        if: failure()
+        if: failure() # Só envia o alerta no Slack se houver falha no pipeline
         uses: slackapi/slack-github-action@v1.23.0
         with:
           payload: |
