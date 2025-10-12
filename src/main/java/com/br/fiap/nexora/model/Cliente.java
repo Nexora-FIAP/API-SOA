@@ -98,7 +98,7 @@ public class Cliente {
         this.atualizadoEm = LocalDateTime.now();
     }
 
-    public void setSenha(String encode) {
+    public void setSenha(String senha) {
         this.senha = senha;
     }
 }
