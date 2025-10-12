@@ -8,10 +8,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,6 +17,7 @@ import java.util.List;
 
 @Entity(name = "Cliente")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "cpf")
@@ -100,4 +98,7 @@ public class Cliente {
         this.atualizadoEm = LocalDateTime.now();
     }
 
+    public void setSenha(String encode) {
+        this.senha = senha;
+    }
 }
