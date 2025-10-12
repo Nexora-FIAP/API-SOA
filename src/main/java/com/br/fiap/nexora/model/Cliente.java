@@ -70,6 +70,7 @@ public class Cliente {
         this.perfilInvestidor = clienteDTO.perfilInvestidor();
         this.telefone = clienteDTO.telefone();
         this.endereco = new Endereco(clienteDTO.endereco());
+        this.senha = clienteDTO.senha();
     }
 
     public void atualizar(ClienteDTO dto, EnderecoRepository enderecoRepository) {

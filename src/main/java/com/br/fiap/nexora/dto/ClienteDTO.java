@@ -30,7 +30,9 @@ public record ClienteDTO(
         String telefone,
 
         @NotNull
-        EnderecoDTO endereco
+        EnderecoDTO endereco,
 
+        @NotBlank
+        String senha
 
 ) { }
