@@ -3,9 +3,11 @@ package com.br.fiap.nexora.model;
 import com.br.fiap.nexora.dto.ClienteDTO;
 import com.br.fiap.nexora.enums.PerfilInvestidor;
 import com.br.fiap.nexora.repository.EnderecoRepository;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -54,6 +56,10 @@ public class Cliente {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cep_endereco")
     Endereco endereco;
+
+    @JsonIgnore // não mostra a senha no JSON
+    @NotBlank
+    String senha;
 
     // Construtor que recebe DTO
     public Cliente(ClienteDTO clienteDTO) {
