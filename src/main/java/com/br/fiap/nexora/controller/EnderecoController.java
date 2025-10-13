@@ -2,8 +2,7 @@ package com.br.fiap.nexora.controller;
 
 import com.br.fiap.nexora.dto.EnderecoDTO;
 import com.br.fiap.nexora.model.Endereco;
-import com.br.fiap.nexora.repository.EnderecoRepository;
-import jakarta.transaction.Transactional;
+import com.br.fiap.nexora.service.EnderecoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,64 +16,52 @@ import java.util.List;
 public class EnderecoController {
 
     @Autowired
-    private EnderecoRepository enderecoRepository;
+    private EnderecoService enderecoService;
 
-    // POST - criar endereço
     @PostMapping
-    @Transactional
     public ResponseEntity<Endereco> cadastrarEndereco(@RequestBody @Valid EnderecoDTO enderecoDTO) {
-        Endereco endereco = new Endereco(enderecoDTO);
-        enderecoRepository.save(endereco);
+        Endereco endereco = enderecoService.criarEndereco(enderecoDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(endereco);
     }
 
-    // GET - buscar todos os endereços
     @GetMapping
     public ResponseEntity<List<Endereco>> buscarTodosEnderecos() {
-        List<Endereco> enderecos = enderecoRepository.findAll();
+        List<Endereco> enderecos = enderecoService.buscarTodos();
         if (enderecos.isEmpty()) {
-            return ResponseEntity.noContent().build(); // retorna 204 se não tiver nenhum
+            return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(enderecos);
     }
 
-    // GET por id
     @GetMapping("/{id}")
     public ResponseEntity<Endereco> buscarEndereco(@PathVariable Long id) {
-        return enderecoRepository.findById(id)
+        return enderecoService.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // GET por CEP
     @GetMapping("/cep/{cep}")
     public ResponseEntity<List<Endereco>> buscarPorCep(@PathVariable String cep) {
-        List<Endereco> enderecos = enderecoRepository.findByCep(cep);
-        if (enderecos.isEmpty()) return ResponseEntity.notFound().build();
+        List<Endereco> enderecos = enderecoService.buscarPorCep(cep);
+        if (enderecos.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(enderecos);
     }
 
-    // PUT - atualizar endereço
     @PutMapping("/{id}")
-    @Transactional
     public ResponseEntity<Endereco> atualizarEndereco(@PathVariable Long id, @RequestBody @Valid EnderecoDTO enderecoDTO) {
-        return enderecoRepository.findById(id)
-                .map(endereco -> {
-                    endereco.atualizar(enderecoDTO);
-                    enderecoRepository.save(endereco);
-                    return ResponseEntity.ok(endereco);
-                })
+        return enderecoService.atualizarEndereco(id, enderecoDTO)
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // DELETE - deletar endereço
     @DeleteMapping("/{id}")
-    @Transactional
     public ResponseEntity<Void> deletarEndereco(@PathVariable Long id) {
-        if (!enderecoRepository.existsById(id)) {
+        boolean deletado = enderecoService.deletarEndereco(id);
+        if (!deletado) {
             return ResponseEntity.notFound().build();
         }
-        enderecoRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }
