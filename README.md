@@ -37,7 +37,7 @@ O objetivo principal da Nexora é democratizar o acesso à educação financeira
 
 Sendo uma solução que **informa, analisa, acompanha e empodera**, a Nexora propõe uma nova era no relacionamento das pessoas com suas finanças, por meio de uma abordagem mais humana, visual e personalizada.
 
-## Passo a passo de configuração e execução
+## Passo a passo de configuração e execução localmente usando insomnia ou postman
 
 1. Após clonar o repositório em seu computador, primeiro vá nesse caminho: "..\src\main\resources" e clique em application.properties
 
@@ -46,6 +46,44 @@ Sendo uma solução que **informa, analisa, acompanha e empodera**, a Nexora pro
 3. "spring.datasource.password=",após o =, coloque a senha que seu username utilizada para acessar em seu banco, configurada na instalação. Como exemplo, se você está utilizando o usuário root e na configuração sua senha for "123" ficará da seguinte forma: spring.datasource.password=123
 
 4. Abra seu MySQL e acesse o mesmo username que utilizou no application.properties. Em Query, coloque o seguinte código sql: create database nexora_banco;
+
+5. Comece a rodar a aplicação em NexoraApplication.java
+
+6. Após começar a rodar a aplicação, ela começará a criar as tabelas no banco. Aguarde criar tudo para ir para os próximos passos.
+
+⚠️Para fazer as requisições da API localmente, é necessário que você faça um cadastro e, posteriormente, o login para gerar o token bearer. 
+
+8. Faça o cadastro usando a url http://localhost:8080/cliente. Você pode utilizar esse mesmo exemplo:
+   {
+   "cpf": "76772586034",
+   "nome": "Usuario Tester",
+   "email": "teste@email.com",
+   "telefone": "11912345679",
+   "perfilInvestidor": "MODERADO",
+   "dataNascimento": "1990-05-15",
+   "senha": "12345678",
+   "endereco": {
+   "id": null,
+   "cep": "04567890",
+   "rua": "Avenida Central",
+   "numero": 457,
+   "complemento": "Casa 2",
+   "bairro": "Centro",
+   "cidade": "Carapicuíba",
+   "uf": "SP"
+   }
+   }
+
+9. Após o cadastro, na rota http://localhost:8080/auth/login faça o login utilizando sua senha (de forma bruta como cadastrou) para gerar o token. A requisição ficará mais ou menos assim:
+
+10. ![img.png](img.png)
+
+10. Copie somente o valor do token, sem as aspas.
+
+11. Quando for realizar alguma requisição, por exemplo, para listar os clientes da aplicação, vá em Auth > Selecione a opção de Bearer Token e copie o token copiado anteriormente na opção de token, conforme abaixo:
+
+![img_1.png](img_1.png)
+
 
 ## Exemplos de requisição e respostas
 
