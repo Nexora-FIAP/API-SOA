@@ -3,14 +3,16 @@ package com.br.fiap.nexora.service;
 import com.br.fiap.nexora.model.Cliente;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.SecretKey;
 import java.util.Date;
 
 @Service
 public class JwtService {
 
-    private final String secret = "segredo-super-seguro";
+    private final SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     public String gerarToken(Cliente cliente) {
         return Jwts.builder()
@@ -19,16 +21,18 @@ public class JwtService {
                 .claim("perfil", cliente.getPerfilInvestidor().name())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 dia
-                .signWith(SignatureAlgorithm.HS256, secret.getBytes())
+                .signWith(secretKey)
                 .compact();
     }
 
     public String validarToken(String token) {
-        return Jwts.parser()
-                .setSigningKey(secret.getBytes())
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
     }
+
 }
 
