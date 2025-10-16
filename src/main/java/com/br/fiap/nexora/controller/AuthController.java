@@ -5,6 +5,9 @@ import com.br.fiap.nexora.dto.TokenDTO;
 import com.br.fiap.nexora.model.Cliente;
 import com.br.fiap.nexora.repository.ClienteRepository;
 import com.br.fiap.nexora.service.JwtService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +30,11 @@ public class AuthController {
     @Autowired
     private JwtService jwtService;
 
+    @Operation(summary = "Realiza login", description = "Autentica o cliente e retorna um token JWT")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Login realizado com sucesso"),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
+    })
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
         Cliente cliente = clienteRepository.findById(loginDTO.cpf())
