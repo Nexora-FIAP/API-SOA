@@ -91,7 +91,6 @@ public class Cliente {
     }
 
 
-
     // Método chamado antes de atualizar a entidade
     @PreUpdate
     public void preUpdate() {
