@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 @Entity(name = "NoticiaFinanceira")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")

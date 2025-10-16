@@ -10,6 +10,7 @@ import java.time.LocalDate;
 
 @Entity(name = "QuizResultado")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")

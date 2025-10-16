@@ -10,6 +10,7 @@ import java.time.LocalDate;
 
 @Entity(name = "Investimento")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")

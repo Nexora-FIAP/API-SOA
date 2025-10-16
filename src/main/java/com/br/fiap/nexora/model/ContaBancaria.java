@@ -12,6 +12,7 @@ import java.util.List;
 
 @Entity(name = "ContaBancaria")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
