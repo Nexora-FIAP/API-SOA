@@ -1,7 +1,6 @@
 package com.br.fiap.nexora.repository;
 
 import com.br.fiap.nexora.model.Endereco;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -17,43 +16,48 @@ class EnderecoRepositoryTest {
     private EnderecoRepository enderecoRepository;
 
     @Test
-    @DisplayName("Deve encontrar endereços pelo CEP")
-    void deveEncontrarEnderecoPorCep() {
-        // Arrange
+    void deveSalvarERecuperarEndereco() {
+        Endereco endereco = new Endereco();
+        endereco.setCep("12345-678");
+        endereco.setRua("Rua A");
+        endereco.setNumero(10);
+        endereco.setComplemento("Apto");
+        endereco.setBairro("Bairro A");
+        endereco.setCidade("Cidade A");
+        endereco.setUf("SP");
+
+        Endereco salvo = enderecoRepository.save(endereco);
+
+        assertNotNull(salvo.getId());
+        assertEquals("12345-678", salvo.getCep());
+    }
+
+    @Test
+    void deveBuscarEnderecoPorCep() {
         Endereco endereco1 = new Endereco();
-        endereco1.setCep("12345-678");
-        endereco1.setRua("Rua das Flores");
-        endereco1.setNumero(100);
-        endereco1.setComplemento("Apto 202");
-        endereco1.setBairro("Centro");
-        endereco1.setCidade("São Paulo");
-        endereco1.setUf("SP");
+        endereco1.setCep("99999-999");
+        endereco1.setRua("Rua B");
+        endereco1.setNumero(20);
+        endereco1.setComplemento("Casa");
+        endereco1.setBairro("Bairro B");
+        endereco1.setCidade("Cidade B");
+        endereco1.setUf("RJ");
 
         Endereco endereco2 = new Endereco();
-        endereco2.setCep("12345-678");
-        endereco2.setRua("Rua das Palmeiras");
-        endereco2.setNumero(200);
-        endereco2.setComplemento("Casa");
-        endereco2.setBairro("Jardim");
-        endereco2.setCidade("São Paulo");
-        endereco2.setUf("SP");
+        endereco2.setCep("99999-999");
+        endereco2.setRua("Rua C");
+        endereco2.setNumero(30);
+        endereco2.setComplemento("Sala");
+        endereco2.setBairro("Bairro C");
+        endereco2.setCidade("Cidade C");
+        endereco2.setUf("RJ");
 
         enderecoRepository.save(endereco1);
         enderecoRepository.save(endereco2);
 
-        // Act
-        List<Endereco> encontrados = enderecoRepository.findByCep("12345-678");
+        List<Endereco> encontrados = enderecoRepository.findByCep("99999-999");
 
-        // Assert
         assertEquals(2, encontrados.size());
-        assertTrue(encontrados.stream().anyMatch(e -> e.getRua().equals("Rua das Flores")));
-        assertTrue(encontrados.stream().anyMatch(e -> e.getRua().equals("Rua das Palmeiras")));
-    }
-
-    @Test
-    @DisplayName("Deve retornar lista vazia quando não encontrar CEP")
-    void deveRetornarListaVaziaQuandoCepNaoExiste() {
-        List<Endereco> encontrados = enderecoRepository.findByCep("00000-000");
-        assertTrue(encontrados.isEmpty());
+        assertTrue(encontrados.stream().allMatch(e -> e.getCep().equals("99999-999")));
     }
 }

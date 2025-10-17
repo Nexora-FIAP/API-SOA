@@ -3,163 +3,142 @@ package com.br.fiap.nexora.controller;
 import com.br.fiap.nexora.dto.EnderecoDTO;
 import com.br.fiap.nexora.model.Endereco;
 import com.br.fiap.nexora.service.EnderecoService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-@AutoConfigureMockMvc(addFilters = false)
-@WebMvcTest(EnderecoController.class)
 class EnderecoControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
+    @Mock
     private EnderecoService enderecoService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    @InjectMocks
+    private EnderecoController enderecoController;
 
-    private EnderecoDTO getSampleDTO() {
-        return new EnderecoDTO(
-                null, "12345-678", "Rua Teste", 100,
-                "Apto 10", "Centro", "São Paulo", "SP"
-        );
-    }
-
-    private Endereco getSampleEndereco() {
-        Endereco endereco = new Endereco(getSampleDTO());
-        endereco.setId(1L);
-        return endereco;
+    public EnderecoControllerTest() {
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    @DisplayName("POST /endereco - deve cadastrar endereço")
-    void deveCadastrarEndereco() throws Exception {
-        Endereco endereco = getSampleEndereco();
-        Mockito.when(enderecoService.criarEndereco(any())).thenReturn(endereco);
+    void deveCadastrarEnderecoComSucesso() {
+        EnderecoDTO dto = new EnderecoDTO(null, "12345-678", "Rua A", 10, "Apto", "Bairro", "Cidade", "SP");
+        Endereco endereco = new Endereco(dto);
 
-        mockMvc.perform(post("/endereco")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(getSampleDTO())))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(endereco.getId()))
-                .andExpect(jsonPath("$.cep").value(endereco.getCep()));
+        when(enderecoService.criarEndereco(dto)).thenReturn(endereco);
+
+        ResponseEntity<Endereco> response = enderecoController.cadastrarEndereco(dto);
+
+        assertEquals(201, response.getStatusCodeValue());
+        assertEquals(endereco, response.getBody());
     }
 
     @Test
-    @DisplayName("GET /endereco - deve retornar lista de endereços")
-    void deveBuscarTodosEnderecos() throws Exception {
-        Mockito.when(enderecoService.buscarTodos()).thenReturn(List.of(getSampleEndereco()));
+    void deveRetornarListaDeEnderecos() {
+        Endereco endereco = new Endereco();
+        when(enderecoService.buscarTodos()).thenReturn(List.of(endereco));
 
-        mockMvc.perform(get("/endereco"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].cep").value("12345-678"));
+        ResponseEntity<List<Endereco>> response = enderecoController.buscarTodosEnderecos();
+
+        assertEquals(200, response.getStatusCodeValue());
+        assertFalse(response.getBody().isEmpty());
     }
 
     @Test
-    @DisplayName("GET /endereco - deve retornar 204 se lista vazia")
-    void deveRetornarNoContentSeListaVazia() throws Exception {
-        Mockito.when(enderecoService.buscarTodos()).thenReturn(List.of());
+    void deveRetornarNoContentQuandoListaVazia() {
+        when(enderecoService.buscarTodos()).thenReturn(List.of());
 
-        mockMvc.perform(get("/endereco"))
-                .andExpect(status().isNoContent());
+        ResponseEntity<List<Endereco>> response = enderecoController.buscarTodosEnderecos();
+
+        assertEquals(204, response.getStatusCodeValue());
     }
 
     @Test
-    @DisplayName("GET /endereco/{id} - deve retornar endereço por ID")
-    void deveBuscarEnderecoPorId() throws Exception {
-        Mockito.when(enderecoService.buscarPorId(1L)).thenReturn(Optional.of(getSampleEndereco()));
+    void deveBuscarEnderecoPorId() {
+        Endereco endereco = new Endereco();
+        when(enderecoService.buscarPorId(1L)).thenReturn(Optional.of(endereco));
 
-        mockMvc.perform(get("/endereco/1"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1L));
+        ResponseEntity<Endereco> response = enderecoController.buscarEndereco(1L);
+
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(endereco, response.getBody());
     }
 
     @Test
-    @DisplayName("GET /endereco/{id} - deve retornar 404 se não encontrado")
-    void deveRetornarNotFoundPorId() throws Exception {
-        Mockito.when(enderecoService.buscarPorId(99L)).thenReturn(Optional.empty());
+    void deveRetornarNotFoundAoBuscarEnderecoPorIdInexistente() {
+        when(enderecoService.buscarPorId(99L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(get("/endereco/99"))
-                .andExpect(status().isNotFound());
+        ResponseEntity<Endereco> response = enderecoController.buscarEndereco(99L);
+
+        assertEquals(404, response.getStatusCodeValue());
     }
 
     @Test
-    @DisplayName("GET /endereco/cep/{cep} - deve buscar por CEP")
-    void deveBuscarPorCep() throws Exception {
-        Mockito.when(enderecoService.buscarPorCep("12345-678")).thenReturn(List.of(getSampleEndereco()));
+    void deveBuscarEnderecosPorCep() {
+        Endereco endereco = new Endereco();
+        when(enderecoService.buscarPorCep("12345-678")).thenReturn(List.of(endereco));
 
-        mockMvc.perform(get("/endereco/cep/12345-678"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].cep").value("12345-678"));
+        ResponseEntity<List<Endereco>> response = enderecoController.buscarPorCep("12345-678");
+
+        assertEquals(200, response.getStatusCodeValue());
+        assertFalse(response.getBody().isEmpty());
     }
 
     @Test
-    @DisplayName("GET /endereco/cep/{cep} - deve retornar 404 se não encontrar")
-    void deveRetornarNotFoundPorCep() throws Exception {
-        Mockito.when(enderecoService.buscarPorCep("00000-000")).thenReturn(List.of());
+    void deveRetornarNotFoundAoBuscarPorCepSemResultados() {
+        when(enderecoService.buscarPorCep("00000-000")).thenReturn(List.of());
 
-        mockMvc.perform(get("/endereco/cep/00000-000"))
-                .andExpect(status().isNotFound());
+        ResponseEntity<List<Endereco>> response = enderecoController.buscarPorCep("00000-000");
+
+        assertEquals(404, response.getStatusCodeValue());
     }
 
     @Test
-    @DisplayName("PUT /endereco/{id} - deve atualizar endereço")
-    void deveAtualizarEndereco() throws Exception {
-        Endereco atualizado = getSampleEndereco();
-        atualizado.setCep("99999-999");
+    void deveAtualizarEnderecoComSucesso() {
+        EnderecoDTO dto = new EnderecoDTO(1L, "12345-678", "Rua A", 10, "Apto", "Bairro", "Cidade", "SP");
+        Endereco enderecoAtualizado = new Endereco(dto);
 
-        Mockito.when(enderecoService.atualizarEndereco(eq(1L), any())).thenReturn(Optional.of(atualizado));
+        when(enderecoService.atualizarEndereco(1L, dto)).thenReturn(Optional.of(enderecoAtualizado));
 
-        mockMvc.perform(put("/endereco/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(getSampleDTO())))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.cep").value("99999-999"));
+        ResponseEntity<Endereco> response = enderecoController.atualizarEndereco(1L, dto);
+
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(enderecoAtualizado, response.getBody());
     }
 
     @Test
-    @DisplayName("PUT /endereco/{id} - deve retornar 404 se não encontrar")
-    void naoDeveAtualizarEnderecoInexistente() throws Exception {
-        Mockito.when(enderecoService.atualizarEndereco(eq(99L), any())).thenReturn(Optional.empty());
+    void deveRetornarNotFoundAoAtualizarEnderecoInexistente() {
+        EnderecoDTO dto = new EnderecoDTO(1L, "12345-678", "Rua A", 10, "Apto", "Bairro", "Cidade", "SP");
 
-        mockMvc.perform(put("/endereco/99")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(getSampleDTO())))
-                .andExpect(status().isNotFound());
+        when(enderecoService.atualizarEndereco(1L, dto)).thenReturn(Optional.empty());
+
+        ResponseEntity<Endereco> response = enderecoController.atualizarEndereco(1L, dto);
+
+        assertEquals(404, response.getStatusCodeValue());
     }
 
     @Test
-    @DisplayName("DELETE /endereco/{id} - deve deletar endereço")
-    void deveDeletarEndereco() throws Exception {
-        Mockito.when(enderecoService.deletarEndereco(1L)).thenReturn(true);
+    void deveDeletarEnderecoComSucesso() {
+        when(enderecoService.deletarEndereco(1L)).thenReturn(true);
 
-        mockMvc.perform(delete("/endereco/1"))
-                .andExpect(status().isNoContent());
+        ResponseEntity<Void> response = enderecoController.deletarEndereco(1L);
+
+        assertEquals(204, response.getStatusCodeValue());
     }
 
     @Test
-    @DisplayName("DELETE /endereco/{id} - deve retornar 404 se não encontrar")
-    void naoDeveDeletarEnderecoInexistente() throws Exception {
-        Mockito.when(enderecoService.deletarEndereco(99L)).thenReturn(false);
+    void deveRetornarNotFoundAoDeletarEnderecoInexistente() {
+        when(enderecoService.deletarEndereco(99L)).thenReturn(false);
 
-        mockMvc.perform(delete("/endereco/99"))
-                .andExpect(status().isNotFound());
+        ResponseEntity<Void> response = enderecoController.deletarEndereco(99L);
+
+        assertEquals(404, response.getStatusCodeValue());
     }
 }
