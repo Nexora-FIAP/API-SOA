@@ -60,10 +60,13 @@ jobs:
         with:
           version: "latest"
 
+      # ✅ Novo passo: autenticar Snyk com o token do GitHub Secrets
+      - name: Authenticate Snyk
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+
+      # 🔍 Rodar o teste após autenticação
       - name: Run Snyk test
         run: snyk test --json > snyk-report.json || true
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       - name: Upload SCA Report
         uses: actions/upload-artifact@v4
