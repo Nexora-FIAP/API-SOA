@@ -52,7 +52,7 @@ jobs:
         run: chmod +x ./mvnw
 
       - name: Ensure we're in the project root
-        run: pwd  # opcional, apenas para debug
+        run: pwd # opcional, apenas para debug
         # geralmente não precisa de cd se o pom.xml está na raiz após checkout
 
       - name: Install Snyk CLI
@@ -103,17 +103,24 @@ jobs:
           wget https://github.com/zaproxy/zaproxy/releases/download/v2.16.1/ZAP_2.16.1_Linux.tar.gz
           tar -xzf ZAP_2.16.1_Linux.tar.gz
           chmod +x ZAP_2.16.1/zap.sh
-          mkdir -p zap-reports
+
+      # ✅ Etapa nova — criação de diretório com permissão total
+      - name: Create writable report directory
+        run: mkdir -p ZAP_2.16.1/zap-reports && chmod -R 777 ZAP_2.16.1/zap-reports
+
+      # ✅ (Opcional, mas recomendado) Atualizar add-ons antes da varredura
+      - name: Update ZAP add-ons
+        run: ./ZAP_2.16.1/zap.sh -cmd -addonupdate
 
       - name: Run ZAP Baseline Scan
         run: |
-          ./ZAP_2.16.1/zap.sh -cmd -quickurl http://localhost:8080 -quickout zap-reports/zap-report.html
+          ./ZAP_2.16.1/zap.sh -cmd -quickurl http://localhost:8080 -quickout ZAP_2.16.1/zap-reports/zap-report.html
 
       - name: Upload DAST Report
         uses: actions/upload-artifact@v4
         with:
           name: dast-report
-          path: zap-reports
+          path: ZAP_2.16.1/zap-reports
 
   # ================================
   # 4. Integração & Monitoramento
